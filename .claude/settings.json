@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(python3 -c 'import json,sys; print(json.load(sys.stdin).get(\"tool_input\",{}).get(\"file_path\",\"\"))' 2>/dev/null); case \"$f\" in *.java) [ -x ./mvnw ] && ./mvnw -q spotless:apply >/dev/null 2>&1 || true ;; esac; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}
