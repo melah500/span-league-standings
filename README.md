@@ -122,10 +122,11 @@ Empty input produces empty output and exit 0.
 |-----:|---------|
 | 0 | Success (including empty input) |
 | 1 | Data or I/O error: malformed CSV, unreadable input, unwritable output |
-| 2 | Usage error: more than two arguments |
+| 2 | Usage error: more than two arguments, or an unrecognised flag |
 
-The only recognised flag is `-h`/`--help`; any other argument is taken to be
-a file path (an unreadable one exits 1).
+The only recognised flag is `-h`/`--help`; any other argument beginning with
+`-` is a usage error (exit 2), never a file path. This also means file names
+starting with `-` are unsupported.
 
 ## Architecture
 
@@ -160,7 +161,9 @@ All bound to `./mvnw verify`, all enforced in CI on every push:
   with the pragmatic rule set in [`config/checkstyle.xml`](config/checkstyle.xml).
 - **JaCoCo** — report plus an enforced **80% line-coverage floor** (actual
   coverage at the time the floor was set: 93.8%; the untested code is the
-  two-line `Main` wrapper and JDK-exception plumbing in `App`).
+  two-line `Main` wrapper and JDK-exception plumbing in `App`). Coverage here
+  is a consequence of TDD, not a target: the floor is a regression tripwire
+  and a quality signal, not proof of correctness.
 - **GitHub Actions** — `./mvnw verify` on Temurin 21 for every push and PR.
 
 ## AI collaboration

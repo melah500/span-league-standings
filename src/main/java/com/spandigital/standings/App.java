@@ -49,6 +49,12 @@ public final class App {
             out.print(USAGE);
             return 0;
         }
+        for (String arg : args) {
+            if (arg.startsWith("-")) {
+                err.print(USAGE);
+                return 2;
+            }
+        }
 
         List<MatchResult> matches;
         try {

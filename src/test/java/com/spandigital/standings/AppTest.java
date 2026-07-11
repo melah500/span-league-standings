@@ -118,6 +118,36 @@ class AppTest {
     }
 
     @Test
+    void unknownLongFlagExitsTwoWithUsageOnStderr() throws IOException {
+        int exit = app("").run("--verbose");
+
+        assertThat(exit).isEqualTo(2);
+        assertThat(err()).contains("Usage");
+        assertThat(out()).isEmpty();
+    }
+
+    @Test
+    void unknownShortFlagExitsTwoWithUsageOnStderr() throws IOException {
+        int exit = app("").run("-x");
+
+        assertThat(exit).isEqualTo(2);
+        assertThat(err()).contains("Usage");
+        assertThat(out()).isEmpty();
+    }
+
+    @Test
+    void dashArgumentInSecondPositionExitsTwo(@TempDir Path dir) throws IOException {
+        Path input = dir.resolve("matches.csv");
+        Files.writeString(input, VALID_INPUT);
+
+        int exit = app("").run(input.toString(), "-o");
+
+        assertThat(exit).isEqualTo(2);
+        assertThat(err()).contains("Usage");
+        assertThat(out()).isEmpty();
+    }
+
+    @Test
     void helpFlagPrintsUsageToStdoutExitZero() throws IOException {
         int exit = app("").run("--help");
 
