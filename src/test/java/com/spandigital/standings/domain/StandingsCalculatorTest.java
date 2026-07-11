@@ -20,6 +20,19 @@ class StandingsCalculatorTest {
         assertThat(byTeam(standings, "Arsenal").points()).isEqualTo(0);
     }
 
+    @Test
+    void drawnMatchAwardsOnePointToEachTeamWithMirroredGoals() {
+        var calculator = new StandingsCalculator();
+
+        List<TeamRecord> standings = calculator.calculate(List.of(new MatchResult("Everton", 2, "Derby County", 2)));
+
+        assertThat(standings)
+                .containsExactlyInAnyOrder(
+                        new TeamRecord("Everton", 1, 0, 1, 0, 2, 2), new TeamRecord("Derby County", 1, 0, 1, 0, 2, 2));
+        assertThat(byTeam(standings, "Everton").points()).isEqualTo(1);
+        assertThat(byTeam(standings, "Derby County").points()).isEqualTo(1);
+    }
+
     private static TeamRecord byTeam(List<TeamRecord> standings, String team) {
         return standings.stream()
                 .filter(record -> record.team().equals(team))
