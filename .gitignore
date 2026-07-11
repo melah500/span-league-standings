@@ -21,6 +21,9 @@ target/
 !data/
 !data/**
 
+# Raw scraped HTML is cached locally only — we keep the fetch script, not the scrapes
+data/raw/
+
 # In case build/data scripts are added later
 !scripts/
 !scripts/**
