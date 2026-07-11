@@ -1,0 +1,26 @@
+# Build output
+target/
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+*.log
+
+# ---- Re-include paths excluded by ~/.gitignore_global ----
+# Mandatory AI collaboration evidence
+!CLAUDE.md
+!.claude/
+!.claude/**
+!ai/
+!ai/**
+
+# Project documentation and data
+!docs/
+!docs/**
+!data/
+!data/**
+
+# In case build/data scripts are added later
+!scripts/
+!scripts/**
